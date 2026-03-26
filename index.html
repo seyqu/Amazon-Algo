@@ -807,8 +807,8 @@
               <div class="formula">
                 <div class="formula-line">score = <span class="c1" id="fw-text">0.400</span> × T + <span class="c2" id="fw-purchase">0.400</span> × P + <span class="c3" id="fw-popularity">0.200</span> × Pop</div>
                 <div class="formula-line">T = somme des mots de la requête présents / longueur du titre</div>
-                <div class="formula-line">P = sigmoid(5 × conversion_rate + 1 × rating)</div>
-                <div class="formula-line">Pop = sales / 1000</div>
+                <div class="formula-line">P = sigmoid(5 × conversion_rate + 1 × (rating / 5))</div>
+                <div class="formula-line">Pop = sales / max_sales</div>
               </div>
             </section>
 
@@ -1012,14 +1012,15 @@
     function purchaseProbability(conversionRate, rating) {
       const w1 = 5;
       const w2 = 1;
-      const z = w1 * conversionRate + w2 * rating;
+      const z = w1 * conversionRate + w2 * (rating / 5);
       return sigmoid(z);
     }
 
     function computeIndividualScore(query, product) {
       const T = textSimilarity(query, product.title);
       const P = purchaseProbability(product.conversion_rate, product.rating);
-      const Pop = product.sales / 1000;
+      const maxSales = Math.max(...products.map(p => p.sales));
+      const Pop = product.sales / maxSales;
       const score = weights.T * T + weights.P * P + weights.Pop * Pop;
       return { score, contribs: { T, P, Pop } };
     }
@@ -1283,7 +1284,7 @@ def sigmoid(z):  # fonction mathématique qui transforme n'importe quelle valeur
 def purchase_probability(conversion_rate, rating):  # fonction qui estime la probabilité qu'un produit soit acheté
    w1 = 5  # poids important donné au taux de conversion
    w2 = 1  # poids plus faible donné à la note du produit
-   z = w1 * conversion_rate + w2 * rating  # combinaison des 2 critères dans une seule valeur
+   z = w1 * conversion_rate + w2 * (rating / 5)  # combinaison des 2 critères dans une seule valeur
    return sigmoid(z)  # on transforme cette valeur en probabilité entre 0 et 1
 
 # ---------------------------
@@ -1297,7 +1298,8 @@ weights = {"T": 0.4, "P": 0.4, "Pop": 0.2}  # poids de départ du score final : 
 def compute_individual_score(query, product):  # fonction qui calcule le score global d'un produit pour une recherche donnée
    T = text_similarity(query, product["title"])  # T = score de similarité entre la recherche et le titre
    P = purchase_probability(product["conversion_rate"], product["rating"])  # P = probabilité estimée d'achat
-   Pop = product["sales"] / 1000  # Pop = popularité basée sur les ventes, divisée par 1000 pour réduire l'échelle
+   max_sales = max(p["sales"] for p in products)
+   Pop = product["sales"] / max_sales  # Pop = popularité basée sur les ventes, divisée par 1000 pour réduire l'échelle
    score = weights["T"] * T + weights["P"] * P + weights["Pop"] * Pop  # score final = somme pondérée des 3 critères
    return score, {"T": T, "P": P, "Pop": Pop}  # on retourne le score total + le détail des contributions
 
@@ -1331,8 +1333,7 @@ for p in products:  # on parcourt chaque produit de la liste
 # Boucle interactive pour simuler les achats
 # ---------------------------
 while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur décide de quitter
-   print("
---- Produits classés (top 10) ---")  # affichage d'un titre pour la liste triée
+   print("\n--- Produits classés (top 10) ---")  # affichage d'un titre pour la liste triée
 
    ranked = sorted(products, key=lambda p: p["score"], reverse=True)  # on trie les produits du meilleur score au moins bon
 
@@ -1340,8 +1341,7 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
        print(f"{i+1}. {p['title']} -> Score: {round(p['score'],4)}")  # affichage du classement avec score arrondi
 
    # Demander le produit acheté
-   choix = input("
-Entrez le numéro du produit que vous achetez (ou 'q' pour quitter) : ")  # on demande à l'utilisateur son choix
+   choix = input("\nEntrez le numéro du produit que vous achetez (ou 'q' pour quitter) : ")  # on demande à l'utilisateur son choix
 
    if choix.lower() == 'q':  # si l'utilisateur tape q ou Q
        break  # on quitte la boucle et donc le programme
@@ -1351,8 +1351,7 @@ Entrez le numéro du produit que vous achetez (ou 'q' pour quitter) : ")  # on d
        continue  # on recommence la boucle sans aller plus loin
 
    selected = ranked[int(choix)-1]  # on récupère le produit choisi (on enlève 1 car les index Python commencent à 0)
-   print(f"
-Vous avez acheté : {selected['title']}")  # confirmation du produit sélectionné
+   print(f"\nVous avez acheté : {selected['title']}")  # confirmation du produit sélectionné
 
    # ---------------------------
    # Ajuster les poids selon le produit acheté
@@ -1374,8 +1373,7 @@ Vous avez acheté : {selected['title']}")  # confirmation du produit sélectionn
        p["score"] = score  # on met à jour le score
        p["contribs"] = contribs  # on met aussi à jour les contributions
 
-   print("
-Scores et coefficients mis à jour !")  # message de confirmation
+   print("\nScores et coefficients mis à jour !")  # message de confirmation
    print("Nouveaux poids : ", {k: round(v, 3) for k, v in weights.items()})  # affichage des poids arrondis pour mieux lire`;
 
     function openPythonCode() {
@@ -1402,7 +1400,8 @@ Scores et coefficients mis à jour !")  # message de confirmation
         const isMatch = queryWords.includes(word.toLowerCase());
         return `<span style="padding:6px 10px;border-radius:999px;border:1px solid ${isMatch ? 'rgba(100,116,139,0.35)' : 'var(--line)'};background:${isMatch ? 'rgba(100,116,139,0.16)' : 'var(--surface-soft)'};color:${isMatch ? 'var(--text)' : 'var(--muted)'};font-size:12px;font-family:var(--mono)">${word}</span>`;
       }).join('');
-      const z = 5 * p.conversion_rate + p.rating;
+      const z = 5 * p.conversion_rate + (p.rating / 5);
+      const maxSales = Math.max(...products.map(x => x.sales));
 
       document.getElementById('dm-title').textContent = p.title;
       document.getElementById('dm-content').innerHTML = `
@@ -1436,7 +1435,7 @@ Scores et coefficients mis à jour !")  # message de confirmation
               <div style="font-family:var(--mono);font-size:14px;color:var(--text)">${p.rating.toFixed(1)}</div>
             </div>
           </div>
-          <div style="font-family:var(--mono);font-size:12px;color:#cbd5e1">z = 5 × ${p.conversion_rate.toFixed(2)} + ${p.rating.toFixed(1)} = ${z.toFixed(4)}</div>
+          <div style="font-family:var(--mono);font-size:12px;color:#cbd5e1">z = 5 × ${p.conversion_rate.toFixed(2)} + (${p.rating.toFixed(1)} / 5) = ${z.toFixed(4)}</div>
           <div style="font-family:var(--mono);font-size:12px;color:#cbd5e1">P = sigmoid(${z.toFixed(4)}) = <span class="c2">${P.toFixed(4)}</span></div>
         </div>
 
@@ -1449,7 +1448,7 @@ Scores et coefficients mis à jour !")  # message de confirmation
             <div style="font-size:12px;color:var(--muted)">Ventes</div>
             <div style="font-family:var(--mono);font-size:14px;color:var(--text)">${p.sales}</div>
           </div>
-          <div style="font-family:var(--mono);font-size:12px;color:#cbd5e1">Pop = ${p.sales} / 1000 = <span class="c3">${Pop.toFixed(4)}</span></div>
+          <div style="font-family:var(--mono);font-size:12px;color:#cbd5e1">Pop = ${p.sales} / maxSales = <span class="c3">${Pop.toFixed(4)}</span></div>
         </div>
 
         <div style="display:grid;gap:8px;padding:16px;border-radius:16px;background:#202631;border:1px solid var(--line)">
