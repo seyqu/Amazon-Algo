@@ -326,6 +326,69 @@
       margin-bottom: 10px;
     }
 
+    .hero-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero-head h2 {
+      margin-bottom: 0;
+      max-width: 800px;
+    }
+
+    .btn-code {
+      flex: 0 0 auto;
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: var(--surface-soft);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      cursor: pointer;
+      transition: background .2s ease, transform .12s ease;
+    }
+
+    .btn-code:hover {
+      background: #2a3038;
+    }
+
+    .btn-code:active {
+      transform: scale(.98);
+    }
+
+    .code-modal-box {
+      width: min(980px, 94vw);
+      max-height: 88vh;
+      overflow: hidden;
+      background: var(--surface-strong);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: 14px;
+    }
+
+    .code-pre {
+      margin: 0;
+      padding: 18px;
+      background: #13181f;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      overflow: auto;
+      color: #dbe4ee;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      white-space: pre-wrap;
+    }
+
     .hero p {
       color: var(--muted);
       line-height: 1.7;
@@ -693,8 +756,8 @@
         </div>
       </div>
       <div class="topbar-right">
-        <div class="pill"><span class="dot"></span><strong id="purchase-count-header">0 achat</strong></div>
-        <div class="pill">Recherche <strong>wireless mouse</strong></div>
+        
+        
         <div class="pill">Catalogue <strong>10 produits</strong></div>
       </div>
     </header>
@@ -703,15 +766,15 @@
       <aside class="panel">
         <div class="panel-head">
           <div>
-            <div class="panel-title">Cœur algorithmique</div>
-            <div class="panel-sub">L’interface reste légère, le Python reste la base.</div>
+            <div class="panel-title">Informations générales</div>
+            <div class="panel-sub">Présentation des coefficients et du fonctionnement de l’algorithme de recommandation.</div>
           </div>
-          <span class="tag tag-python">algo.py</span>
+          <span class="tag tag-python">Base Python</span>
         </div>
         <div class="panel-body">
           <div class="stack">
             <section class="card">
-              <h3>Poids dynamiques</h3>
+              <h3>Coefficient des variables</h3>
               <div class="weight-item">
                 <div class="weight-topline">
                   <span class="weight-name">Texte (T)</span>
@@ -733,6 +796,10 @@
                 </div>
                 <div class="track"><div class="fill fill-pop" id="bar-popularity" style="width:20%"></div></div>
               </div>
+            </section>
+
+            <section class="card">
+              <button class="btn btn-soft" style="width:100%" onclick="resetWeights()">Réinitialiser les coefficients</button>
             </section>
 
             <section class="card">
@@ -762,7 +829,10 @@
         <div class="hero">
           <div>
             <div class="tag tag-live">interface shopping</div>
-            <h2>Simulation interactive d’un algorithme de recommandation Amazon</h2>
+            <div class="hero-head">
+              <h2>Simulation interactive d’un algorithme de recommandation Amazon</h2>
+              <button class="btn-code" type="button" onclick="openPythonCode()">Voir le code Python</button>
+            </div>
             <p>
               Ce projet illustre le fonctionnement d’un algorithme de classement de produits : calcul du score, pondération des critères, classement en temps réel et mise à jour des coefficients après chaque achat simulé.
             </p>
@@ -780,11 +850,7 @@
             <h3>Sélection recommandée</h3>
             <p>Visualisation claire du classement, des scores et de l’évolution des poids.</p>
           </div>
-          <div class="chips">
-            <span class="chip">Classement dynamique</span>
-            <span class="chip">Achats simulés</span>
-            <span class="chip">Poids adaptatifs</span>
-          </div>
+          
         </div>
 
         <div class="products" id="products-grid"></div>
@@ -845,7 +911,23 @@
         conversion_rate: 0.05,
         rating: 4.3,
         sales: 400,
-        image: 'https://images.unsplash.com/photo-1517336714739-489689fd1ca8?auto=format&fit=crop&w=1200&q=80'
+        image: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
+          <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
+            <defs>
+              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#1c2128"/>
+                <stop offset="100%" stop-color="#12161b"/>
+              </linearGradient>
+            </defs>
+            <rect width="1200" height="750" fill="url(#bg)"/>
+            <rect x="200" y="250" width="800" height="220" rx="20" fill="#2a313b" stroke="#3b4655" stroke-width="6"/>
+            <circle cx="350" cy="360" r="45" fill="#64748b" opacity="0.7"/>
+            <circle cx="600" cy="360" r="45" fill="#64748b" opacity="0.7"/>
+            <circle cx="850" cy="360" r="45" fill="#64748b" opacity="0.7"/>
+            <rect x="300" y="500" width="600" height="20" rx="10" fill="#94a3b8"/>
+            <text x="600" y="150" text-anchor="middle" fill="#e5e7eb" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700">Laptop Cooling Pad</text>
+          </svg>
+        `)}`
       },
       {
         id: 6,
@@ -1117,6 +1199,19 @@
       }, 360);
     }
 
+    function resetWeights() {
+      weights = { T: 0.4, P: 0.4, Pop: 0.2 };
+      purchaseCount = 0;
+
+      addLog('Réinitialisation des coefficients', 'RESET');
+
+      const ranked = computeAll();
+      updateWeightsUI();
+      updateScoresTable(ranked);
+      updateShop(ranked);
+      updateTopStats();
+    }
+
     function init() {
       addLog('Initialisation du moteur', 'START');
       addLog('Algorithme Python conservé : T + P + Pop', 'INFO');
@@ -1130,6 +1225,19 @@
     init();
   </script>
   <!-- Modal Détails -->
+  <div id="python-modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.72);z-index:60;">
+    <div class="code-modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div>
+          <strong style="font-size:16px">Code Python original</strong>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">Version utilisée comme base principale du projet.</div>
+        </div>
+        <button class="btn btn-soft" onclick="closePythonCode()">Fermer</button>
+      </div>
+      <pre class="code-pre"><code id="python-code"></code></pre>
+    </div>
+  </div>
+
   <div id="details-modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:50;">
     <div style="width:min(720px,92vw);background:var(--surface-strong);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px">
@@ -1141,6 +1249,144 @@
   </div>
 
   <script>
+    const pythonSourceCode = `import math  # on importe le module math pour utiliser la fonction exp() dans la sigmoid
+from collections import Counter  # Counter sert à compter combien de fois chaque mot apparaît
+
+# ---------------------------
+# Paramètres globaux
+# ---------------------------
+learning_rate = 0.2  # vitesse d'apprentissage : plus cette valeur est grande, plus les poids changent vite après un achat
+
+# ---------------------------
+# Calcul de similarité texte
+# ---------------------------
+def text_similarity(query, title):  # fonction qui mesure à quel point la recherche ressemble au titre du produit
+   query_words = query.lower().split()  # on met la recherche en minuscules puis on la découpe en mots
+   title_words = title.lower().split()  # on met le titre en minuscules puis on le découpe en mots
+   title_count = Counter(title_words)   # on compte combien de fois chaque mot apparaît dans le titre
+   score = 0  # variable qui va accumuler le score de similarité
+
+   for word in query_words:  # on parcourt chaque mot tapé par l'utilisateur
+       score += title_count[word]  # si le mot existe dans le titre, on ajoute son nombre d'occurrences au score
+
+   return score / len(title_words)  # on divise par le nombre de mots du titre pour éviter de favoriser les titres trop longs
+
+# ---------------------------
+# Fonction Sigmoid
+# ---------------------------
+def sigmoid(z):  # fonction mathématique qui transforme n'importe quelle valeur en nombre entre 0 et 1
+   return 1 / (1 + math.exp(-z))  # formule classique de la sigmoid, souvent utilisée pour représenter une probabilité
+
+# ---------------------------
+# Probabilité d'achat
+# ---------------------------
+def purchase_probability(conversion_rate, rating):  # fonction qui estime la probabilité qu'un produit soit acheté
+   w1 = 5  # poids important donné au taux de conversion
+   w2 = 1  # poids plus faible donné à la note du produit
+   z = w1 * conversion_rate + w2 * rating  # combinaison des 2 critères dans une seule valeur
+   return sigmoid(z)  # on transforme cette valeur en probabilité entre 0 et 1
+
+# ---------------------------
+# Coefficients dynamiques
+# ---------------------------
+weights = {"T": 0.4, "P": 0.4, "Pop": 0.2}  # poids de départ du score final : T=texte, P=probabilité d'achat, Pop=popularité
+
+# ---------------------------
+# Calcul du score individuel d'un produit
+# ---------------------------
+def compute_individual_score(query, product):  # fonction qui calcule le score global d'un produit pour une recherche donnée
+   T = text_similarity(query, product["title"])  # T = score de similarité entre la recherche et le titre
+   P = purchase_probability(product["conversion_rate"], product["rating"])  # P = probabilité estimée d'achat
+   Pop = product["sales"] / 1000  # Pop = popularité basée sur les ventes, divisée par 1000 pour réduire l'échelle
+   score = weights["T"] * T + weights["P"] * P + weights["Pop"] * Pop  # score final = somme pondérée des 3 critères
+   return score, {"T": T, "P": P, "Pop": Pop}  # on retourne le score total + le détail des contributions
+
+# ---------------------------
+# Liste de produits
+# ---------------------------
+products = [
+   {"title": "Wireless Mouse Logitech", "conversion_rate": 0.12, "rating": 4.5, "sales": 800},  # produit 1
+   {"title": "Gaming Mouse RGB", "conversion_rate": 0.09, "rating": 4.6, "sales": 550},          # produit 2
+   {"title": "USB Office Mouse", "conversion_rate": 0.06, "rating": 4.2, "sales": 350},          # produit 3
+   {"title": "Wireless Keyboard Logitech", "conversion_rate": 0.08, "rating": 4.3, "sales": 650},# produit 4
+   {"title": "Mechanical Gaming Keyboard", "conversion_rate": 0.07, "rating": 4.8, "sales": 480},# produit 5
+   {"title": "Laptop Cooling Pad", "conversion_rate": 0.05, "rating": 4.3, "sales": 400},        # produit 6
+   {"title": "Bluetooth Headphones", "conversion_rate": 0.09, "rating": 4.4, "sales": 600},      # produit 7
+   {"title": "USB-C Charger 65W", "conversion_rate": 0.11, "rating": 4.2, "sales": 700},         # produit 8
+   {"title": "External Hard Drive 1TB", "conversion_rate": 0.08, "rating": 4.1, "sales": 500},   # produit 9
+   {"title": "Gaming Monitor 24inch", "conversion_rate": 0.05, "rating": 4.7, "sales": 450},     # produit 10
+]
+
+query = "wireless mouse"  # ce que l'utilisateur recherche
+
+# ---------------------------
+# Calcul initial des scores
+# ---------------------------
+for p in products:  # on parcourt chaque produit de la liste
+   score, contribs = compute_individual_score(query, p)  # on calcule son score et le détail de ses critères
+   p["score"] = score  # on ajoute le score directement dans le dictionnaire du produit
+   p["contribs"] = contribs  # on ajoute aussi les contributions T, P et Pop pour les réutiliser plus tard
+
+# ---------------------------
+# Boucle interactive pour simuler les achats
+# ---------------------------
+while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur décide de quitter
+   print("
+--- Produits classés (top 10) ---")  # affichage d'un titre pour la liste triée
+
+   ranked = sorted(products, key=lambda p: p["score"], reverse=True)  # on trie les produits du meilleur score au moins bon
+
+   for i, p in enumerate(ranked):  # enumerate permet d'avoir l'index + le produit
+       print(f"{i+1}. {p['title']} -> Score: {round(p['score'],4)}")  # affichage du classement avec score arrondi
+
+   # Demander le produit acheté
+   choix = input("
+Entrez le numéro du produit que vous achetez (ou 'q' pour quitter) : ")  # on demande à l'utilisateur son choix
+
+   if choix.lower() == 'q':  # si l'utilisateur tape q ou Q
+       break  # on quitte la boucle et donc le programme
+
+   if not choix.isdigit() or int(choix) < 1 or int(choix) > len(ranked):  # vérifie que le choix est bien un nombre valide
+       print("Choix invalide !")  # message d'erreur si la saisie n'est pas correcte
+       continue  # on recommence la boucle sans aller plus loin
+
+   selected = ranked[int(choix)-1]  # on récupère le produit choisi (on enlève 1 car les index Python commencent à 0)
+   print(f"
+Vous avez acheté : {selected['title']}")  # confirmation du produit sélectionné
+
+   # ---------------------------
+   # Ajuster les poids selon le produit acheté
+   # ---------------------------
+   contribs = selected["contribs"]  # on récupère les contributions du produit acheté
+
+   for k in weights:  # on parcourt les clés des poids : T, P et Pop
+       weights[k] += learning_rate * contribs[k]  # on augmente chaque poids selon l'importance de ce critère dans le produit acheté
+
+   # Normaliser les poids pour que leur somme = 1
+   total_w = sum(weights.values())  # on calcule la somme totale des nouveaux poids
+   weights = {k: v / total_w for k, v in weights.items()}  # on redimensionne les poids pour que leur somme fasse exactement 1
+
+   # ---------------------------
+   # Recalculer les scores pour tous les produits
+   # ---------------------------
+   for p in products:  # on repasse sur tous les produits
+       score, contribs = compute_individual_score(query, p)  # on recalcule leur score avec les nouveaux poids
+       p["score"] = score  # on met à jour le score
+       p["contribs"] = contribs  # on met aussi à jour les contributions
+
+   print("
+Scores et coefficients mis à jour !")  # message de confirmation
+   print("Nouveaux poids : ", {k: round(v, 3) for k, v in weights.items()})  # affichage des poids arrondis pour mieux lire`;
+
+    function openPythonCode() {
+      document.getElementById('python-modal').style.display = 'flex';
+      document.getElementById('python-code').textContent = pythonSourceCode;
+    }
+
+    function closePythonCode() {
+      document.getElementById('python-modal').style.display = 'none';
+    }
+
     function showDetails(productId){
       const ranked = computeAll();
       const p = ranked.find(x => x.id === productId);
@@ -1217,8 +1463,12 @@
     function closeDetails(){
       document.getElementById('details-modal').style.display = 'none';
     }
-    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeDetails(); });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeDetails();
+        closePythonCode();
+      }
+    });
   </script>
 </body>
 </html>
-
