@@ -743,7 +743,21 @@
       .topbar { flex-direction: column; align-items: flex-start; }
       .topbar-right { justify-content: flex-start; }
     }
-  </style>
+  .mini-idea{
+  font-family: var(--mono);
+  font-size:10px;
+  padding:4px 6px;
+  border-radius:8px;
+  border:1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--muted);
+  cursor:pointer;
+}
+.mini-idea:hover{
+  color: var(--text);
+  background:#2a3038;
+}
+</style>
 </head>
 <body>
   <div class="shell">
@@ -751,8 +765,8 @@
       <div class="brand">
         <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" alt="Amazon" class="logo" />
         <div>
-          <div class="eyebrow">Recommendation system</div>
-          <h1>Algorithme de recommandation inspiré des systèmes A9 et A10 d’Amazon</h1>
+          <div class="eyebrow">Algorithme de recommandation</div>
+          <h1>Système de ranking de produits basé sur les algorithmes A10 et A9 d'Amazon</h1>
         </div>
       </div>
       <div class="topbar-right">
@@ -767,7 +781,7 @@
         <div class="panel-head">
           <div>
             <div class="panel-title">Informations générales</div>
-            <div class="panel-sub">Présentation des coefficients et du fonctionnement de l’algorithme de recommandation.</div>
+            <div class="panel-sub">Présentation des coefficients et du fonctionnement du système de ranking.</div>
           </div>
           <span class="tag tag-python">Base Python</span>
         </div>
@@ -778,6 +792,7 @@
               <div class="weight-item">
                 <div class="weight-topline">
                   <span class="weight-name">Texte (T)</span>
+                  <button class="mini-idea" type="button" onclick="showIdeaModal()" title="Amélioration possible">idée</button>
                   <span class="weight-value" id="val-text">0.400</span>
                 </div>
                 <div class="track"><div class="fill fill-text" id="bar-text" style="width:40%"></div></div>
@@ -830,11 +845,14 @@
           <div>
             
             <div class="hero-head">
-              <h2>Simulation interactive d’un algorithme de recommandation Amazon</h2>
-              <button class="btn-code" type="button" onclick="openPythonCode()">Voir le code Python</button>
+              <h2>Simulation interactive d’un système de ranking de produits</h2>
+              <div style="display:flex;gap:10px;flex-wrap:wrap;">
+                <button class="btn-code" type="button" onclick="openPythonCode()">Voir le code Python</button>
+                <button class="btn-code" type="button" onclick="openJsCode()">Voir le code JavaScript</button>
+              </div>
             </div>
             <p>
-              Ce projet illustre le fonctionnement d’un algorithme de classement de produits : calcul du score, pondération des critères, classement en temps réel et mise à jour des coefficients après chaque achat simulé.
+              Ce projet illustre le fonctionnement d’un système de ranking de produits : calcul du score, pondération des critères, tri du plus pertinent au moins pertinent et mise à jour des coefficients après chaque achat simulé.
             </p>
             <div class="searchbox">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -847,8 +865,8 @@
 
         <div class="section-row">
           <div>
-            <h3>Sélection recommandée</h3>
-            <p>Visualisation claire du classement, des scores et de l’évolution des poids.</p>
+            <h3>Classement des produits</h3>
+            <p>Visualisation du ranking, des scores et de l’évolution des coefficients.</p>
           </div>
           
         </div>
@@ -871,7 +889,7 @@
         conversion_rate: 0.12,
         rating: 4.5,
         sales: 800,
-        image: 'https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/m280/2024-update/gallery/m280-wireless-mouse-top-view-black-gallery-01.png'
       },
       {
         id: 1,
@@ -879,7 +897,7 @@
         conversion_rate: 0.09,
         rating: 4.6,
         sales: 550,
-        image: 'https://images.unsplash.com/photo-1613141412501-9012977f1969?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://lescahiersdudebutant.fr/wp-content/uploads/2020/05/glorious-model-o-test-1.jpg'
       },
       {
         id: 2,
@@ -887,102 +905,63 @@
         conversion_rate: 0.06,
         rating: 4.2,
         sales: 350,
-        image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://www.backmarket.fr/cdn-cgi/image/format%3Dauto%2Cquality%3D75%2Cwidth%3D1080/https://d2e6ccujb3mkqf.cloudfront.net/1203937d-dc86-47df-b0e9-24d13316b407-1_dd694a23-f384-42b5-80c8-b04309a946ad.jpg'
       },
       {
         id: 3,
-        title: 'Wireless Keyboard Logitech',
+        title: 'Wireless Mouse Slim',
         conversion_rate: 0.08,
         rating: 4.3,
         sales: 650,
-        image: 'https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://www.ugreen.com/cdn/shop/files/d66e4aecb424bb148d52f4cded28fd36.webp?v=1772094255'
       },
       {
         id: 4,
-        title: 'Mechanical Gaming Keyboard',
+        title: 'Ergonomic Mouse Vertical',
         conversion_rate: 0.07,
         rating: 4.8,
         sales: 480,
-        image: 'https://images.unsplash.com/photo-1517430816045-df4b7de11d1d?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://resource.logitech.com/w_800,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/lift-for-business/gallery/lift-vertical-ergonomic-mouse-business-gallery-graphite-1.png?v=1'
       },
       {
         id: 5,
-        title: 'Laptop Cooling Pad',
+        title: 'Mouse Pad Gaming XL',
         conversion_rate: 0.05,
         rating: 4.3,
         sales: 400,
-        image: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
-            <defs>
-              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#1c2128"/>
-                <stop offset="100%" stop-color="#12161b"/>
-              </linearGradient>
-            </defs>
-            <rect width="1200" height="750" fill="url(#bg)"/>
-            <rect x="200" y="250" width="800" height="220" rx="20" fill="#2a313b" stroke="#3b4655" stroke-width="6"/>
-            <circle cx="350" cy="360" r="45" fill="#64748b" opacity="0.7"/>
-            <circle cx="600" cy="360" r="45" fill="#64748b" opacity="0.7"/>
-            <circle cx="850" cy="360" r="45" fill="#64748b" opacity="0.7"/>
-            <rect x="300" y="500" width="600" height="20" rx="10" fill="#94a3b8"/>
-            <text x="600" y="150" text-anchor="middle" fill="#e5e7eb" font-family="Arial, Helvetica, sans-serif" font-size="40" font-weight="700">Laptop Cooling Pad</text>
-          </svg>
-        `)}`
+        image: 'https://www.xantron.net/media/image/product/600/lg/xantron-mousepad-rgb-1-grosses-gaming-led-mauspad-rgb-800x300-xxl-mit-perfektem-glide-schreibtischunterlage-gaming-beleuchtetes-mauspad.jpg'
       },
       {
         id: 6,
-        title: 'Bluetooth Headphones',
+        title: 'Bluetooth Wireless Mouse',
         conversion_rate: 0.09,
         rating: 4.4,
         sales: 600,
-        image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://images.unsplash.com/photo-1613141411244-0e4ac259d217?auto=format&fit=crop&w=1200&q=80'
       },
       {
         id: 7,
-        title: 'USB-C Charger 65W',
+        title: 'Rechargeable Wireless Mouse',
         conversion_rate: 0.11,
         rating: 4.2,
         sales: 700,
-        image: 'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1200&q=80'
       },
       {
         id: 8,
-        title: 'External Hard Drive 1TB',
+        title: 'Silent Click Mouse',
         conversion_rate: 0.08,
         rating: 4.1,
         sales: 500,
-        image: 'https://images.unsplash.com/photo-1591799265444-d66432b91588?auto=format&fit=crop&w=1200&q=80'
+        image: 'https://logitech.onlinesalestore.pk/cdn/shop/files/logitech-m240-bluetooth-wireless-mouse-silent-graphite-silent-clicks.jpg?v=1700761890'
       },
       {
         id: 9,
-        title: 'Gaming Monitor 24inch',
+        title: 'Laptop Cooling Pad Mouse Setup',
         conversion_rate: 0.05,
         rating: 4.7,
         sales: 450,
-        image: `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(`
-          <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="750" viewBox="0 0 1200 750">
-            <defs>
-              <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#1b2026"/>
-                <stop offset="100%" stop-color="#111417"/>
-              </linearGradient>
-              <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#3a4758"/>
-                <stop offset="100%" stop-color="#232a34"/>
-              </linearGradient>
-            </defs>
-            <rect width="1200" height="750" fill="url(#bg)"/>
-            <rect x="180" y="130" width="840" height="440" rx="26" fill="#0f1318" stroke="#556070" stroke-width="8"/>
-            <rect x="215" y="165" width="770" height="370" rx="18" fill="url(#screen)"/>
-            <rect x="540" y="575" width="120" height="34" rx="10" fill="#6b7280"/>
-            <rect x="470" y="610" width="260" height="24" rx="12" fill="#8b95a3"/>
-            <circle cx="320" cy="250" r="34" fill="#d4a373" opacity="0.9"/>
-            <rect x="300" y="320" width="420" height="22" rx="11" fill="#94a3b8" opacity="0.8"/>
-            <rect x="300" y="360" width="300" height="18" rx="9" fill="#64748b" opacity="0.8"/>
-            <rect x="300" y="410" width="520" height="14" rx="7" fill="#475569" opacity="0.85"/>
-            <text x="600" y="680" text-anchor="middle" fill="#e5e7eb" font-family="Arial, Helvetica, sans-serif" font-size="38" font-weight="700">Gaming Monitor 24inch</text>
-          </svg>
-        `)}`
+        image: 'https://m.media-amazon.com/images/I/715GLGNsCeL.jpg'
       }
     ];
 
@@ -1239,6 +1218,55 @@
     </div>
   </div>
 
+  <div id="js-modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.72);z-index:60;">
+    <div class="code-modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;">
+        <div>
+          <strong style="font-size:16px">Code JavaScript utilisé dans le site</strong>
+          <div style="font-size:13px;color:var(--muted);margin-top:4px;">Reproduction fidèle de l’algorithme Python pour l’exécution dans le navigateur.</div>
+        </div>
+        <button class="btn btn-soft" onclick="closeJsCode()">Fermer</button>
+      </div>
+      <pre class="code-pre"><code id="js-code"></code></pre>
+    </div>
+  </div>
+
+  <div id="idea-modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:55;">
+    <div style="width:min(560px,92vw);background:var(--surface-strong);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px">
+        <strong style="font-size:16px">Idée d’amélioration</strong>
+        <button class="btn btn-soft" type="button" onclick="closeIdeaModal()">Fermer</button>
+      </div>
+      <div style="display:grid;gap:12px;color:var(--muted);line-height:1.7;font-size:14px">
+        <p>Une amélioration possible serait d’utiliser une similarité sémantique (IA) au lieu d’un simple matching de mots.</p>
+        
+        <pre style="background:#13181f;border:1px solid var(--line);border-radius:12px;padding:12px;font-family:var(--mono);font-size:11px;color:#dbe4ee;overflow:auto;white-space:pre-wrap">def text_similarity_openai(query, title):
+    """
+    Version avancée utilisant un modèle de langage pour évaluer
+    la similarité sémantique entre la requête et le titre.
+    """
+
+    from openai import OpenAI
+    client = OpenAI()
+
+    prompt = f"""
+    Tu évalues la similarité entre une requête et un titre produit.
+    Donne uniquement un nombre entre 0 et 1.
+
+    Requête : {query}
+    Titre : {title}
+    """
+
+    response = client.responses.create(
+        model="gpt-5.4",
+        input=prompt
+    )
+
+    return float(response.output_text)</pre>
+      </div>
+    </div>
+  </div>
+
   <div id="details-modal" style="position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.6);z-index:50;">
     <div style="width:min(720px,92vw);background:var(--surface-strong);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;gap:12px">
@@ -1299,7 +1327,7 @@ def compute_individual_score(query, product):  # fonction qui calcule le score g
    T = text_similarity(query, product["title"])  # T = score de similarité entre la recherche et le titre
    P = purchase_probability(product["conversion_rate"], product["rating"])  # P = probabilité estimée d'achat
    max_sales = max(p["sales"] for p in products)
-   Pop = product["sales"] / max_sales  # Pop = popularité basée sur les ventes, divisée par 1000 pour réduire l'échelle
+   Pop = product["sales"] / max_sales  # Pop = popularité normalisée par le maximum des ventes
    score = weights["T"] * T + weights["P"] * P + weights["Pop"] * Pop  # score final = somme pondérée des 3 critères
    return score, {"T": T, "P": P, "Pop": Pop}  # on retourne le score total + le détail des contributions
 
@@ -1307,16 +1335,16 @@ def compute_individual_score(query, product):  # fonction qui calcule le score g
 # Liste de produits
 # ---------------------------
 products = [
-   {"title": "Wireless Mouse Logitech", "conversion_rate": 0.12, "rating": 4.5, "sales": 800},  # produit 1
-   {"title": "Gaming Mouse RGB", "conversion_rate": 0.09, "rating": 4.6, "sales": 550},          # produit 2
-   {"title": "USB Office Mouse", "conversion_rate": 0.06, "rating": 4.2, "sales": 350},          # produit 3
-   {"title": "Wireless Keyboard Logitech", "conversion_rate": 0.08, "rating": 4.3, "sales": 650},# produit 4
-   {"title": "Mechanical Gaming Keyboard", "conversion_rate": 0.07, "rating": 4.8, "sales": 480},# produit 5
-   {"title": "Laptop Cooling Pad", "conversion_rate": 0.05, "rating": 4.3, "sales": 400},        # produit 6
-   {"title": "Bluetooth Headphones", "conversion_rate": 0.09, "rating": 4.4, "sales": 600},      # produit 7
-   {"title": "USB-C Charger 65W", "conversion_rate": 0.11, "rating": 4.2, "sales": 700},         # produit 8
-   {"title": "External Hard Drive 1TB", "conversion_rate": 0.08, "rating": 4.1, "sales": 500},   # produit 9
-   {"title": "Gaming Monitor 24inch", "conversion_rate": 0.05, "rating": 4.7, "sales": 450},     # produit 10
+   {"title": "Wireless Mouse Logitech", "conversion_rate": 0.12, "rating": 4.5, "sales": 800},
+   {"title": "Gaming Mouse RGB", "conversion_rate": 0.09, "rating": 4.6, "sales": 550},
+   {"title": "USB Office Mouse", "conversion_rate": 0.06, "rating": 4.2, "sales": 350},
+   {"title": "Wireless Mouse Slim", "conversion_rate": 0.08, "rating": 4.3, "sales": 650},
+   {"title": "Ergonomic Mouse Vertical", "conversion_rate": 0.07, "rating": 4.8, "sales": 480},
+   {"title": "Mouse Pad Gaming XL", "conversion_rate": 0.05, "rating": 4.3, "sales": 400},
+   {"title": "Bluetooth Wireless Mouse", "conversion_rate": 0.09, "rating": 4.4, "sales": 600},
+   {"title": "Rechargeable Wireless Mouse", "conversion_rate": 0.11, "rating": 4.2, "sales": 700},
+   {"title": "Silent Click Mouse", "conversion_rate": 0.08, "rating": 4.1, "sales": 500},
+   {"title": "Laptop Cooling Pad Mouse Setup", "conversion_rate": 0.05, "rating": 4.7, "sales": 450},
 ]
 
 query = "wireless mouse"  # ce que l'utilisateur recherche
@@ -1376,6 +1404,82 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
    print("\nScores et coefficients mis à jour !")  # message de confirmation
    print("Nouveaux poids : ", {k: round(v, 3) for k, v in weights.items()})  # affichage des poids arrondis pour mieux lire`;
 
+    const jsSourceCode = `const learningRate = 0.2;
+let weights = { T: 0.4, P: 0.4, Pop: 0.2 };
+const query = 'wireless mouse';
+
+const products = [
+  { title: 'Wireless Mouse Logitech', conversion_rate: 0.12, rating: 4.5, sales: 800 },
+  { title: 'Gaming Mouse RGB', conversion_rate: 0.09, rating: 4.6, sales: 550 },
+  { title: 'USB Office Mouse', conversion_rate: 0.06, rating: 4.2, sales: 350 },
+  { title: 'Wireless Mouse Slim', conversion_rate: 0.08, rating: 4.3, sales: 650 },
+  { title: 'Ergonomic Mouse Vertical', conversion_rate: 0.07, rating: 4.8, sales: 480 },
+  { title: 'Mouse Pad Gaming XL', conversion_rate: 0.05, rating: 4.3, sales: 400 },
+  { title: 'Bluetooth Wireless Mouse', conversion_rate: 0.09, rating: 4.4, sales: 600 },
+  { title: 'Rechargeable Wireless Mouse', conversion_rate: 0.11, rating: 4.2, sales: 700 },
+  { title: 'Silent Click Mouse', conversion_rate: 0.08, rating: 4.1, sales: 500 },
+  { title: 'Laptop Cooling Pad Mouse Setup', conversion_rate: 0.05, rating: 4.7, sales: 450 }
+];
+
+function textSimilarity(query, title) {
+  const queryWords = query.toLowerCase().split(/\s+/);
+  const titleWords = title.toLowerCase().split(/\s+/);
+  const titleCount = {};
+
+  titleWords.forEach(word => {
+    titleCount[word] = (titleCount[word] || 0) + 1;
+  });
+
+  let score = 0;
+  queryWords.forEach(word => {
+    score += titleCount[word] || 0;
+  });
+
+  return score / titleWords.length;
+}
+
+function sigmoid(z) {
+  return 1 / (1 + Math.exp(-z));
+}
+
+function purchaseProbability(conversionRate, rating) {
+  const w1 = 5;
+  const w2 = 1;
+  const z = w1 * conversionRate + w2 * (rating / 5);
+  return sigmoid(z);
+}
+
+function computeIndividualScore(query, product) {
+  const T = textSimilarity(query, product.title);
+  const P = purchaseProbability(product.conversion_rate, product.rating);
+  const maxSales = Math.max(...products.map(p => p.sales));
+  const Pop = product.sales / maxSales;
+  const score = weights.T * T + weights.P * P + weights.Pop * Pop;
+  return { score, contribs: { T, P, Pop } };
+}
+
+function computeAll() {
+  return products
+    .map(product => {
+      const result = computeIndividualScore(query, product);
+      return { ...product, score: result.score, contribs: result.contribs };
+    })
+    .sort((a, b) => b.score - a.score);
+}
+
+function updateWeights(selectedProduct) {
+  const contribs = selectedProduct.contribs;
+
+  Object.keys(weights).forEach(key => {
+    weights[key] += learningRate * contribs[key];
+  });
+
+  const total = Object.values(weights).reduce((sum, value) => sum + value, 0);
+  Object.keys(weights).forEach(key => {
+    weights[key] = weights[key] / total;
+  });
+}`;
+
     function openPythonCode() {
       document.getElementById('python-modal').style.display = 'flex';
       document.getElementById('python-code').textContent = pythonSourceCode;
@@ -1383,6 +1487,15 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
 
     function closePythonCode() {
       document.getElementById('python-modal').style.display = 'none';
+    }
+
+    function openJsCode() {
+      document.getElementById('js-modal').style.display = 'flex';
+      document.getElementById('js-code').textContent = jsSourceCode;
+    }
+
+    function closeJsCode() {
+      document.getElementById('js-modal').style.display = 'none';
     }
 
     function showDetails(productId){
@@ -1459,6 +1572,14 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
       `;
       document.getElementById('details-modal').style.display = 'flex';
     }
+    function showIdeaModal() {
+      document.getElementById('idea-modal').style.display = 'flex';
+    }
+
+    function closeIdeaModal() {
+      document.getElementById('idea-modal').style.display = 'none';
+    }
+
     function closeDetails(){
       document.getElementById('details-modal').style.display = 'none';
     }
@@ -1466,6 +1587,8 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
       if (e.key === 'Escape') {
         closeDetails();
         closePythonCode();
+        closeJsCode();
+        closeIdeaModal();
       }
     });
   </script>
