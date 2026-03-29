@@ -877,7 +877,7 @@
   </div>
 
   <script>
-    const learningRate = 0.2;
+    const learningRate = 0.35;
 
     let weights = { T: 0.4, P: 0.4, Pop: 0.2 };
     let purchaseCount = 0;
@@ -886,81 +886,81 @@
       {
         id: 0,
         title: 'Wireless Mouse Logitech',
-        conversion_rate: 0.12,
-        rating: 4.5,
-        sales: 800,
+        conversion_rate: 0.10,
+        rating: 4.4,
+        sales: 780,
         image: 'https://resource.logitech.com/c_fill,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/m280/2024-update/gallery/m280-wireless-mouse-top-view-black-gallery-01.png'
       },
       {
         id: 1,
-        title: 'Gaming Mouse RGB',
-        conversion_rate: 0.09,
-        rating: 4.6,
-        sales: 550,
+        title: 'Gaming Wireless Mouse RGB',
+        conversion_rate: 0.095,
+        rating: 4.4,
+        sales: 740,
         image: 'https://lescahiersdudebutant.fr/wp-content/uploads/2020/05/glorious-model-o-test-1.jpg'
       },
       {
         id: 2,
-        title: 'USB Office Mouse',
-        conversion_rate: 0.06,
+        title: 'USB Wireless Office Mouse',
+        conversion_rate: 0.09,
         rating: 4.2,
-        sales: 350,
+        sales: 710,
         image: 'https://www.backmarket.fr/cdn-cgi/image/format%3Dauto%2Cquality%3D75%2Cwidth%3D1080/https://d2e6ccujb3mkqf.cloudfront.net/1203937d-dc86-47df-b0e9-24d13316b407-1_dd694a23-f384-42b5-80c8-b04309a946ad.jpg'
       },
       {
         id: 3,
         title: 'Wireless Mouse Slim',
-        conversion_rate: 0.08,
+        conversion_rate: 0.096,
         rating: 4.3,
-        sales: 650,
+        sales: 735,
         image: 'https://www.ugreen.com/cdn/shop/files/d66e4aecb424bb148d52f4cded28fd36.webp?v=1772094255'
       },
       {
         id: 4,
-        title: 'Ergonomic Mouse Vertical',
-        conversion_rate: 0.07,
-        rating: 4.8,
-        sales: 480,
+        title: 'Ergonomic Wireless Mouse',
+        conversion_rate: 0.094,
+        rating: 4.5,
+        sales: 730,
         image: 'https://resource.logitech.com/w_800,c_lpad,ar_4:3,q_auto,f_auto,dpr_1.0/d_transparent.gif/content/dam/logitech/en/products/mice/lift-for-business/gallery/lift-vertical-ergonomic-mouse-business-gallery-graphite-1.png?v=1'
       },
       {
         id: 5,
-        title: 'Mouse Pad Gaming XL',
-        conversion_rate: 0.05,
-        rating: 4.3,
-        sales: 400,
+        title: 'Gaming Mouse Pad XL',
+        conversion_rate: 0.082,
+        rating: 4.2,
+        sales: 700,
         image: 'https://www.xantron.net/media/image/product/600/lg/xantron-mousepad-rgb-1-grosses-gaming-led-mauspad-rgb-800x300-xxl-mit-perfektem-glide-schreibtischunterlage-gaming-beleuchtetes-mauspad.jpg'
       },
       {
         id: 6,
         title: 'Bluetooth Wireless Mouse',
-        conversion_rate: 0.09,
+        conversion_rate: 0.097,
         rating: 4.4,
-        sales: 600,
+        sales: 738,
         image: 'https://images.unsplash.com/photo-1613141411244-0e4ac259d217?auto=format&fit=crop&w=1200&q=80'
       },
       {
         id: 7,
         title: 'Rechargeable Wireless Mouse',
-        conversion_rate: 0.11,
-        rating: 4.2,
-        sales: 700,
+        conversion_rate: 0.098,
+        rating: 4.3,
+        sales: 742,
         image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=1200&q=80'
       },
       {
         id: 8,
-        title: 'Silent Click Mouse',
-        conversion_rate: 0.08,
-        rating: 4.1,
-        sales: 500,
+        title: 'Silent Wireless Mouse',
+        conversion_rate: 0.095,
+        rating: 4.2,
+        sales: 739,
         image: 'https://logitech.onlinesalestore.pk/cdn/shop/files/logitech-m240-bluetooth-wireless-mouse-silent-graphite-silent-clicks.jpg?v=1700761890'
       },
       {
         id: 9,
-        title: 'Laptop Cooling Pad Mouse Setup',
-        conversion_rate: 0.05,
-        rating: 4.7,
-        sales: 450,
+        title: 'Wireless Mouse Setup Pad',
+        conversion_rate: 0.091,
+        rating: 4.3,
+        sales: 715,
         image: 'https://m.media-amazon.com/images/I/715GLGNsCeL.jpg'
       }
     ];
@@ -1156,6 +1156,12 @@
       if (card) card.classList.add('flash');
 
       setTimeout(() => {
+        const productRef = products.find(product => product.id === productId);
+        if (productRef) {
+          productRef.sales += 12;
+          productRef.conversion_rate = Math.min(productRef.conversion_rate + 0.003, 0.25);
+        }
+
         const contribs = selected.contribs;
         Object.keys(weights).forEach(key => {
           weights[key] += learningRate * contribs[key];
@@ -1169,6 +1175,7 @@
         purchaseCount += 1;
 
         addLog(`Achat simulé sur « ${selected.title} »`, 'OK');
+        addLog(`Ventes +12 et conversion +0.003 sur le produit acheté`, 'DATA');
         addLog(`Poids mis à jour → T:${weights.T.toFixed(3)} · P:${weights.P.toFixed(3)} · Pop:${weights.Pop.toFixed(3)}`, 'UPDATE');
 
         const reranked = computeAll();
@@ -1284,7 +1291,7 @@ from collections import Counter  # Counter sert à compter combien de fois chaqu
 # ---------------------------
 # Paramètres globaux
 # ---------------------------
-learning_rate = 0.2  # vitesse d'apprentissage : plus cette valeur est grande, plus les poids changent vite après un achat
+learning_rate = 0.35  # vitesse d'apprentissage : plus cette valeur est grande, plus les poids changent vite après un achat
 
 # ---------------------------
 # Calcul de similarité texte
@@ -1332,19 +1339,26 @@ def compute_individual_score(query, product):  # fonction qui calcule le score g
    return score, {"T": T, "P": P, "Pop": Pop}  # on retourne le score total + le détail des contributions
 
 # ---------------------------
+# Mise à jour simple du produit acheté
+# ---------------------------
+def update_product_stats(product):
+   product["sales"] += 12
+   product["conversion_rate"] = min(product["conversion_rate"] + 0.003, 0.25)
+
+# ---------------------------
 # Liste de produits
 # ---------------------------
 products = [
    {"title": "Wireless Mouse Logitech", "conversion_rate": 0.12, "rating": 4.5, "sales": 800},
-   {"title": "Gaming Mouse RGB", "conversion_rate": 0.09, "rating": 4.6, "sales": 550},
-   {"title": "USB Office Mouse", "conversion_rate": 0.06, "rating": 4.2, "sales": 350},
-   {"title": "Wireless Mouse Slim", "conversion_rate": 0.08, "rating": 4.3, "sales": 650},
-   {"title": "Ergonomic Mouse Vertical", "conversion_rate": 0.07, "rating": 4.8, "sales": 480},
-   {"title": "Mouse Pad Gaming XL", "conversion_rate": 0.05, "rating": 4.3, "sales": 400},
-   {"title": "Bluetooth Wireless Mouse", "conversion_rate": 0.09, "rating": 4.4, "sales": 600},
-   {"title": "Rechargeable Wireless Mouse", "conversion_rate": 0.11, "rating": 4.2, "sales": 700},
-   {"title": "Silent Click Mouse", "conversion_rate": 0.08, "rating": 4.1, "sales": 500},
-   {"title": "Laptop Cooling Pad Mouse Setup", "conversion_rate": 0.05, "rating": 4.7, "sales": 450},
+   {"title": "Gaming Wireless Mouse RGB", "conversion_rate": 0.095, "rating": 4.4, "sales": 740},
+   {"title": "USB Wireless Office Mouse", "conversion_rate": 0.09, "rating": 4.2, "sales": 710},
+   {"title": "Wireless Mouse Slim", "conversion_rate": 0.096, "rating": 4.3, "sales": 735},
+   {"title": "Ergonomic Wireless Mouse", "conversion_rate": 0.094, "rating": 4.5, "sales": 730},
+   {"title": "Gaming Mouse Pad XL", "conversion_rate": 0.082, "rating": 4.2, "sales": 700},
+   {"title": "Bluetooth Wireless Mouse", "conversion_rate": 0.097, "rating": 4.4, "sales": 738},
+   {"title": "Rechargeable Wireless Mouse", "conversion_rate": 0.098, "rating": 4.3, "sales": 742},
+   {"title": "Silent Wireless Mouse", "conversion_rate": 0.095, "rating": 4.2, "sales": 739},
+   {"title": "Wireless Mouse Setup Pad", "conversion_rate": 0.091, "rating": 4.3, "sales": 715},
 ]
 
 query = "wireless mouse"  # ce que l'utilisateur recherche
@@ -1379,7 +1393,10 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
        continue  # on recommence la boucle sans aller plus loin
 
    selected = ranked[int(choix)-1]  # on récupère le produit choisi (on enlève 1 car les index Python commencent à 0)
-   print(f"\nVous avez acheté : {selected['title']}")  # confirmation du produit sélectionné
+   print(f"
+Vous avez acheté : {selected['title']}")  # confirmation du produit sélectionné
+
+   update_product_stats(selected)  # on augmente un peu les ventes et le taux de conversion du produit acheté
 
    # ---------------------------
    # Ajuster les poids selon le produit acheté
@@ -1404,22 +1421,27 @@ while True:  # boucle infinie : elle continue jusqu'à ce que l'utilisateur déc
    print("\nScores et coefficients mis à jour !")  # message de confirmation
    print("Nouveaux poids : ", {k: round(v, 3) for k, v in weights.items()})  # affichage des poids arrondis pour mieux lire`;
 
-    const jsSourceCode = `const learningRate = 0.2;
+    const jsSourceCode = `const learningRate = 0.35;
 let weights = { T: 0.4, P: 0.4, Pop: 0.2 };
 const query = 'wireless mouse';
 
 const products = [
   { title: 'Wireless Mouse Logitech', conversion_rate: 0.12, rating: 4.5, sales: 800 },
-  { title: 'Gaming Mouse RGB', conversion_rate: 0.09, rating: 4.6, sales: 550 },
-  { title: 'USB Office Mouse', conversion_rate: 0.06, rating: 4.2, sales: 350 },
-  { title: 'Wireless Mouse Slim', conversion_rate: 0.08, rating: 4.3, sales: 650 },
-  { title: 'Ergonomic Mouse Vertical', conversion_rate: 0.07, rating: 4.8, sales: 480 },
-  { title: 'Mouse Pad Gaming XL', conversion_rate: 0.05, rating: 4.3, sales: 400 },
-  { title: 'Bluetooth Wireless Mouse', conversion_rate: 0.09, rating: 4.4, sales: 600 },
-  { title: 'Rechargeable Wireless Mouse', conversion_rate: 0.11, rating: 4.2, sales: 700 },
-  { title: 'Silent Click Mouse', conversion_rate: 0.08, rating: 4.1, sales: 500 },
-  { title: 'Laptop Cooling Pad Mouse Setup', conversion_rate: 0.05, rating: 4.7, sales: 450 }
+  { title: 'Gaming Wireless Mouse RGB', conversion_rate: 0.095, rating: 4.4, sales: 740 },
+  { title: 'USB Wireless Office Mouse', conversion_rate: 0.09, rating: 4.2, sales: 710 },
+  { title: 'Wireless Mouse Slim', conversion_rate: 0.096, rating: 4.3, sales: 735 },
+  { title: 'Ergonomic Wireless Mouse', conversion_rate: 0.094, rating: 4.5, sales: 730 },
+  { title: 'Gaming Mouse Pad XL', conversion_rate: 0.082, rating: 4.2, sales: 700 },
+  { title: 'Bluetooth Wireless Mouse', conversion_rate: 0.097, rating: 4.4, sales: 738 },
+  { title: 'Rechargeable Wireless Mouse', conversion_rate: 0.098, rating: 4.3, sales: 742 },
+  { title: 'Silent Wireless Mouse', conversion_rate: 0.095, rating: 4.2, sales: 739 },
+  { title: 'Wireless Mouse Setup Pad', conversion_rate: 0.091, rating: 4.3, sales: 715 }
 ];
+
+function updateProductStats(product) {
+  product.sales += 12;
+  product.conversion_rate = Math.min(product.conversion_rate + 0.003, 0.25);
+}
 
 function textSimilarity(query, title) {
   const queryWords = query.toLowerCase().split(/\s+/);
